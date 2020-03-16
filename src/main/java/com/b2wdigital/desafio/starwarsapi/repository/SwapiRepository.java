@@ -33,7 +33,7 @@ public class SwapiRepository {
 	
 	@CachePut("planetas")
 	@HystrixCommand(
-			fallbackMethod = "fallback", 
+			fallbackMethod = "getPlanetFromCacheOrNull", 
 			commandProperties = {
 					@HystrixProperty(name = "execution.isolation.thread.timeoutInMilliseconds", value = "3000"),
 					@HystrixProperty(name = "circuitBreaker.errorThresholdPercentage", value="60")
@@ -50,7 +50,7 @@ public class SwapiRepository {
 				.orElseThrow(() -> new PlanetaNotFoundException(name));
 	}
 	
-	public PlanetaSwapiDto fallback(String name) {
+	public PlanetaSwapiDto getPlanetFromCacheOrNull(String name) {
 		ValueWrapper p = cache.getCache("planetas").get(name);
 		return p != null ? (PlanetaSwapiDto) p.get() : null;
 	}
