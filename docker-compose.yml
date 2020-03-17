@@ -1,0 +1,27 @@
+version : '3'
+services:
+  mongodb:
+    container_name: mongodb-starwarsapi-java
+    image: mongo:latest
+    ports:
+      - 27017:27017
+    networks:
+      - prod-network
+
+  api:
+    container_name: java-starwarsapi
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    networks:
+      - prod-network
+    environment:
+      MONGOURL: mongodb://mongodb:27017/starwars
+    depends_on:
+      - mongodb
+
+networks:
+  prod-network:
+    driver: bridge
