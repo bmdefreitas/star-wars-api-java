@@ -9,7 +9,6 @@ import java.util.stream.Collectors;
 
 import javax.validation.Valid;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.http.HttpStatus;
@@ -26,9 +25,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.b2wdigital.desafio.starwarsapi.component.PlanetaModelAssembler;
-import com.b2wdigital.desafio.starwarsapi.dto.PlanetaSwapiDto;
 import com.b2wdigital.desafio.starwarsapi.model.Planeta;
-import com.b2wdigital.desafio.starwarsapi.repository.SwapiRepository;
 import com.b2wdigital.desafio.starwarsapi.service.PlanetaService;
 
 import lombok.NonNull;
@@ -38,9 +35,6 @@ import lombok.RequiredArgsConstructor;
 @RequestMapping("/api/v1/planetas")
 @RequiredArgsConstructor
 public class PlanetaController {
-	
-	@Autowired
-	SwapiRepository swapiRepository;
 	
 	@NonNull
 	private final PlanetaService planetaService;
@@ -91,10 +85,5 @@ public class PlanetaController {
 	public void delete(@PathVariable String id) {
 		planetaService.remove(id);
 	}
-	
-	@GetMapping("/test")
-	public PlanetaSwapiDto test(@RequestParam("nome") String nome) throws Exception {
-		return swapiRepository.findPlanetsByName(nome);
-	}	
 
 }
