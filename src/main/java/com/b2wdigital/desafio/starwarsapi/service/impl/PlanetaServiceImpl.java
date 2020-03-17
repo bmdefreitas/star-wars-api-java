@@ -55,6 +55,8 @@ public class PlanetaServiceImpl implements PlanetaService {
 
 	@Override
 	public void remove(String id) {
-		planetaRepository.deleteById(id);
+		if(show(id) != null) {
+			planetaRepository.deleteById(id);
+		}
 	}
 }
